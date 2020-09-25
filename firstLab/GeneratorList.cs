@@ -9,12 +9,12 @@ namespace firstLab
         {
             var list = new List<int>();
             var rnd = new Random();
-            
+
             for (var i = 0; i < count; i++)
             {
                 list.Add(rnd.Next(int.MinValue, int.MaxValue));
             }
-            
+
             return list;
         }
     }

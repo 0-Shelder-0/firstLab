@@ -1,22 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace firstLab
 {
     public class Measurer
     {
-        public TimeSpan Measure(List<int> list, Func<List<int>, List<int>> func)
+        public TimeSpan Measure(MethodInfo methodInfo, List<int> list)
         {
             var stopwatch = new Stopwatch();
-            func(new List<int>());
-            
+
             stopwatch.Start();
-            func(list);
+            var result = methodInfo.Invoke(new TestMethods(), new object[] {list});
             stopwatch.Stop();
-            
-            var resultTime = stopwatch.Elapsed;
-            return resultTime;
+
+            return stopwatch.Elapsed;
         }
     }
 }

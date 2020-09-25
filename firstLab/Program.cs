@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace firstLab
@@ -8,24 +7,13 @@ namespace firstLab
     {
         static void Main()
         {
-            var generator = new GeneratorList();
-            var list = generator.Generate(5);
+            var itemCountList = new List<int> {100, 10000, 1000000};
 
-            var measurer = new Measurer();
-            Console.WriteLine(
-                $"Время Distinct на листе, состоящим из 5 элементов: {measurer.Measure(list, Distinct)}");
-        }
-
-        private static List<int> Distinct(List<int> list)
-        {
-            var hashSet = new HashSet<int>();
-
-            foreach (var element in list)
+            foreach (var method in typeof(TestMethods).GetMethods()
+                                                      .Where(info => info.ReturnType.IsGenericType))
             {
-                hashSet.Add(element);
+                Benchmark.Run(itemCountList, method);
             }
-
-            return hashSet.ToList();
         }
     }
 }
