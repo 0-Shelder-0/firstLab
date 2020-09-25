@@ -12,7 +12,7 @@ namespace firstLab
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            var result = methodInfo.Invoke(new TestMethods(), new object[] {list});
+            methodInfo.Invoke(new TestMethods(), new object[] {list});
             stopwatch.Stop();
 
             return stopwatch.Elapsed;

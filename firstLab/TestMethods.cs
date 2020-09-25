@@ -5,7 +5,7 @@ namespace firstLab
 {
     public class TestMethods
     {
-        public List<int> Distinct(List<int> list)
+        public List<int> NewDistinct(IEnumerable<int> list)
         {
             var hashSet = new HashSet<int>();
 
@@ -15,6 +15,11 @@ namespace firstLab
             }
 
             return hashSet.ToList();
+        }
+
+        public List<int> DefaultDistinct(IEnumerable<int> list)
+        {
+            return list.Distinct().ToList();
         }
     }
 }
