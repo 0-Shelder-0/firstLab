@@ -10,6 +10,7 @@ namespace firstLab
         public TimeSpan Measure(MethodInfo methodInfo, List<int> list)
         {
             var stopwatch = new Stopwatch();
+            methodInfo.Invoke(new TestMethods(), new object[] {new List<int>()});
 
             stopwatch.Start();
             methodInfo.Invoke(new TestMethods(), new object[] {list});
