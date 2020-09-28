@@ -9,10 +9,11 @@ namespace firstLab
         private static void Main()
         {
             var itemCountList = new List<int> {100, 10000, 1000000};
+            var generator = new GeneratorList();
 
             foreach (var method in GetTestMethods())
             {
-                Benchmark.Run(itemCountList, method);
+                Benchmark.Run(method, generator, itemCountList);
             }
         }
 

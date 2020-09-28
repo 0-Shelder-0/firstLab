@@ -6,8 +6,12 @@ namespace firstLab
     public class TestMethods
     {
         [TestMethod]
-        public List<int> NewDistinct(IEnumerable<int> list)
+        public List<int> NewDistinct(List<int> list)
         {
+            if (list == null)
+            {
+                return null;
+            }
             var hashSet = new HashSet<int>();
 
             foreach (var element in list)
@@ -19,9 +23,33 @@ namespace firstLab
         }
 
         [TestMethod]
-        public List<int> DefaultDistinct(IEnumerable<int> list)
+        public List<int> DefaultDistinct(List<int> list)
         {
-            return list.Distinct().ToList();
+            return list?.Distinct().ToList();
+        }
+
+        [TestMethod]
+        public List<int> DefaultIntersect(List<int> list)
+        {
+            return list?.Intersect(list).ToList();
+        }
+
+        public List<int> NewIntersect(List<int> list)
+        {
+            return null;
+        }
+
+        [TestMethod]
+        public List<int> NewSorting(List<int> list)
+        {
+            return null;
+        }
+
+        [TestMethod]
+        public List<int> DefaultSorting(List<int> list)
+        {
+            list?.Sort();
+            return list;
         }
     }
 }

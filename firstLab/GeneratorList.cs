@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace firstLab
 {
-    public class GeneratorList
+    public class GeneratorList : IGeneratorCollection
     {
-        public List<int> Generate(int count)
+        public object[] Generate(int count)
         {
             var list = new List<int>();
             var rnd = new Random();
@@ -15,7 +15,7 @@ namespace firstLab
                 list.Add(rnd.Next(int.MinValue, int.MaxValue));
             }
 
-            return list;
+            return new object[] {list};
         }
     }
 }
