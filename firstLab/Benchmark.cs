@@ -1,24 +1,32 @@
-using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace firstLab
 {
-    public class Benchmark
+    public static class Benchmark
     {
-        public static void Run(MethodInfo methodInfo,
-                                  IGeneratorCollection generator,
-                                  IEnumerable<int> itemCountList)
+        public static void Run(FileStream stream,
+                               MethodInfo methodInfo,
+                               IGeneratorCollection generator,
+                               IEnumerable<int> itemCountList)
         {
-            Console.WriteLine($"Время {methodInfo.Name} на листе, состоящем из");
+            WriteText(stream, $"Время {methodInfo.Name} на листе, состоящем из\n");
             foreach (var count in itemCountList)
             {
                 var measurer = new Measurer();
-                var parameters = generator.Generate(count);
+                var parameters = generator.Generate(count, methodInfo.GetParameters().Length);
 
-                Console.WriteLine($"{count} элементов: {measurer.Measure(methodInfo, parameters).TotalMilliseconds}");
+                WriteText(stream, $"{count}: {measurer.Measure(methodInfo, parameters).TotalMilliseconds}\n");
             }
-            Console.WriteLine();
+
+            WriteText(stream, "\n");
+        }
+
+        private static void WriteText(Stream stream, string text)
+        {
+            stream.Write(Encoding.Default.GetBytes(text));
         }
     }
 }

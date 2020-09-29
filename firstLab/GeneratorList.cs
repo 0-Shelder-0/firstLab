@@ -5,17 +5,21 @@ namespace firstLab
 {
     public class GeneratorList : IGeneratorCollection
     {
-        public object[] Generate(int count)
+        public object[] Generate(int count, int collectionCount)
         {
-            var list = new List<int>();
+            var collectionList = new List<List<int>>();
             var rnd = new Random();
 
-            for (var i = 0; i < count; i++)
+            for (var i = 0; i < collectionCount; i++)
             {
-                list.Add(rnd.Next(int.MinValue, int.MaxValue));
+                collectionList.Add(new List<int>());
+                for (var k = 0; k < count; k++)
+                {
+                    collectionList[i].Add(rnd.Next(0, 100));
+                }
             }
 
-            return new object[] {list};
+            return collectionList.ToArray();
         }
     }
 }

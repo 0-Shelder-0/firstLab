@@ -1,4 +1,6 @@
+using System;
+
 namespace firstLab
 {
-    public class TestMethodAttribute : System.Attribute { }
+    public class TestMethodAttribute : Attribute { }
 }

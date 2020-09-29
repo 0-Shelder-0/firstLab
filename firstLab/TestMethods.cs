@@ -6,50 +6,44 @@ namespace firstLab
     public class TestMethods
     {
         [TestMethod]
-        public List<int> NewDistinct(List<int> list)
+        public List<int> NewDistinct(List<int> items)
         {
-            if (list == null)
+            return items?.ToHashSet()
+                         .ToList();
+        }
+
+        [TestMethod]
+        public List<int> DefaultDistinct(List<int> items)
+        {
+            return items?.Distinct()
+                         .ToList();
+        }
+
+        [TestMethod]
+        public List<int> DefaultIntersect(List<int> first, List<int> second)
+        {
+            return first?.Intersect(second)
+                         .ToList();
+        }
+
+        [TestMethod]
+        public List<int> NewIntersect(List<int> first, List<int> second)
+        {
+            if (first == null || second == null)
             {
                 return null;
             }
-            var hashSet = new HashSet<int>();
+            var hashSet = new HashSet<int>(second);
 
-            foreach (var element in list)
-            {
-                hashSet.Add(element);
-            }
-
-            return hashSet.ToList();
+            return first.Where(item => hashSet.Remove(item))
+                        .ToList();
         }
 
         [TestMethod]
-        public List<int> DefaultDistinct(List<int> list)
+        public List<int> DefaultSorting(List<int> items)
         {
-            return list?.Distinct().ToList();
-        }
-
-        [TestMethod]
-        public List<int> DefaultIntersect(List<int> list)
-        {
-            return list?.Intersect(list).ToList();
-        }
-
-        public List<int> NewIntersect(List<int> list)
-        {
-            return null;
-        }
-
-        [TestMethod]
-        public List<int> NewSorting(List<int> list)
-        {
-            return null;
-        }
-
-        [TestMethod]
-        public List<int> DefaultSorting(List<int> list)
-        {
-            list?.Sort();
-            return list;
+            items?.Sort();
+            return items;
         }
     }
 }

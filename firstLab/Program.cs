@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -8,12 +10,18 @@ namespace firstLab
     {
         private static void Main()
         {
-            var itemCountList = new List<int> {100, 10000, 1000000};
+            var itemCountList = Enumerable.Range(1, 100)
+                                          .Select(item => item * 50)
+                                          .ToList();
             var generator = new GeneratorList();
 
             foreach (var method in GetTestMethods())
             {
-                Benchmark.Run(method, generator, itemCountList);
+                var stream = new FileStream($"C:/Users/{Environment.UserName}/Desktop/{method.Name}.txt",
+                                            FileMode.Create,
+                                            FileAccess.Write);
+                Benchmark.Run(stream, method, generator, itemCountList);
+                stream.Close();
             }
         }
 
