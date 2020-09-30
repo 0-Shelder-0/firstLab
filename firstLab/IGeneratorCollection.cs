@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+
 namespace firstLab
 {
     public interface IGeneratorCollection
     {
-        object[] Generate(int itemsCount, int collectionCount);
+        List<List<int>> Generate(int itemsCount, int collectionCount);
     }
 }

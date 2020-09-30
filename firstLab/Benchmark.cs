@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -10,15 +11,18 @@ namespace firstLab
         public static void Run(FileStream stream,
                                MethodInfo methodInfo,
                                IGeneratorCollection generator,
-                               IEnumerable<int> itemCountList)
+                               List<int> itemCountList)
         {
+            var maxCount = generator.Generate(itemCountList.Max(), methodInfo.GetParameters().Length);
+            var measurer = new Measurer();
+            
             WriteText(stream, $"Время {methodInfo.Name} на листе, состоящем из\n");
             foreach (var count in itemCountList)
             {
-                var measurer = new Measurer();
-                var parameters = generator.Generate(count, methodInfo.GetParameters().Length);
+                var parameters = maxCount.Select(list => list.Take(count).ToList())
+                                         .ToArray();
 
-                WriteText(stream, $"{count}: {measurer.Measure(methodInfo, parameters).TotalMilliseconds}\n");
+                WriteText(stream, $"{measurer.Measure(methodInfo, parameters).TotalMilliseconds}\n");
             }
 
             WriteText(stream, "\n");
