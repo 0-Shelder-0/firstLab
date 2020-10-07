@@ -15,17 +15,20 @@ namespace firstLab
         {
             var maxCount = generator.Generate(itemCountList.Max(), methodInfo.GetParameters().Length);
             var measurer = new Measurer();
-            
+            measurer.Measure(methodInfo, GetParameters(maxCount, 100)); //Test run
             WriteText(stream, $"Время {methodInfo.Name} на листе, состоящем из\n");
             foreach (var count in itemCountList)
             {
-                var parameters = maxCount.Select(list => list.Take(count).ToList())
-                                         .ToArray();
-
-                WriteText(stream, $"{measurer.Measure(methodInfo, parameters).TotalMilliseconds}\n");
+                var time = measurer.Measure(methodInfo, GetParameters(maxCount, count)).TotalMilliseconds;
+                WriteText(stream, $"{count} : {time}\n");
             }
-
             WriteText(stream, "\n");
+        }
+
+        private static List<int>[] GetParameters(IEnumerable<List<int>> maxCount, int count)
+        {
+            return maxCount.Select(list => list.Take(count).ToList())
+                           .ToArray();
         }
 
         private static void WriteText(Stream stream, string text)
