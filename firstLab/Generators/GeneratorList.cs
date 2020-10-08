@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace firstLab
+namespace firstLab.Generators
 {
     public class GeneratorList : IGeneratorCollection
     {
-        public List<List<int>> Generate(int count, int collectionCount)
+        public List<List<int>> GenerateList(int count, int collectionCount)
         {
             var collectionList = new List<List<int>>();
             var rnd = new Random();

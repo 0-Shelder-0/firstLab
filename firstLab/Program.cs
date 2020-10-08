@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using firstLab.Generators;
 
 namespace firstLab
 {
@@ -10,8 +11,8 @@ namespace firstLab
     {
         private static void Main()
         {
-            var itemCountList = GetItemCountList();
-            var generator = new GeneratorList();
+            var itemCountList = GetItemCountList(100);
+            var generator = new GeneratorWorstList();
             foreach (var method in GetTestMethods())
             {
                 using (var stream = new FileStream(GetFilePath(method), FileMode.Create, FileAccess.Write))
@@ -21,9 +22,9 @@ namespace firstLab
             }
         }
 
-        private static List<int> GetItemCountList()
+        private static List<int> GetItemCountList(int count)
         {
-            return Enumerable.Range(1, 100)
+            return Enumerable.Range(1, count)
                              .Select(item => item * 1000)
                              .ToList();
         }

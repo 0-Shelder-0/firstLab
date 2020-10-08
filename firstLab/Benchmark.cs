@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using firstLab.Generators;
 
 namespace firstLab
 {
@@ -13,16 +14,15 @@ namespace firstLab
                                IGeneratorCollection generator,
                                List<int> itemCountList)
         {
-            var maxCount = generator.Generate(itemCountList.Max(), methodInfo.GetParameters().Length);
+            var maxCount = generator.GenerateList(itemCountList.Max(), methodInfo.GetParameters().Length);
             var measurer = new Measurer();
             measurer.Measure(methodInfo, GetParameters(maxCount, 100)); //Test run
-            WriteText(stream, $"Время {methodInfo.Name} на листе, состоящем из\n");
+            WriteText(stream, $"Время {methodInfo.Name} на листе, состоящем из");
             foreach (var count in itemCountList)
             {
                 var time = measurer.Measure(methodInfo, GetParameters(maxCount, count)).TotalMilliseconds;
-                WriteText(stream, $"{count} : {time}\n");
+                WriteText(stream, $"{count} : {time} ms");
             }
-            WriteText(stream, "\n");
         }
 
         private static List<int>[] GetParameters(IEnumerable<List<int>> maxCount, int count)
@@ -34,6 +34,7 @@ namespace firstLab
         private static void WriteText(Stream stream, string text)
         {
             stream.Write(Encoding.Default.GetBytes(text));
+            stream.Write(Encoding.Default.GetBytes("\r\n"));
         }
     }
 }
